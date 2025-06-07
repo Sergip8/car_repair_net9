@@ -1,0 +1,18 @@
+# Archivos y carpetas de .NET
+/bin/*
+/obj/*
+
+# Archivos de configuración sensibles
+appsettings.json
+appsettings.Development.json
+bin/Debug/net9.0/appsettings.json
+bin/Debug/net9.0/appsettings.Development.json
+# Archivos de usuario y temporales
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Otros
+.vscode/*
+.env  
