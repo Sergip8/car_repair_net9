@@ -75,7 +75,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("register")]
-    [AllowAnonymous]
+    
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
         return await _exceptionHandling.ExecuteAsync(async () =>
@@ -86,7 +86,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    [AllowAnonymous]
+ 
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         return await _exceptionHandling.ExecuteAsync(async () =>

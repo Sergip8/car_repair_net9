@@ -1,11 +1,7 @@
 using AutoMapper;
 using car_repair.Models.DTO;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
 
 
 public class UserService : IUserService
@@ -14,18 +10,19 @@ public class UserService : IUserService
     private readonly ILogger<UserService> _logger;
     private readonly IExceptionHandlingService _exceptionHandling;
     private readonly IMapper _mapper;
-    private readonly SendGridSettings _sendGridSettings;
     private readonly IJwtService _jwtService;
+    private readonly IEmailService _emailService;
 
 
-    public UserService(CarRepairDbContext context, ILogger<UserService> logger, IExceptionHandlingService exceptionHandling, IMapper mapper, IOptions<SendGridSettings> sendGridSettings, IJwtService jwtService)
+    public UserService(CarRepairDbContext context, ILogger<UserService> logger, IExceptionHandlingService exceptionHandling, IMapper mapper, IEmailService emailService, IJwtService jwtService)
     {
         _context = context;
         _logger = logger;
         _exceptionHandling = exceptionHandling;
         _mapper = mapper;
+        _emailService = emailService;
         _jwtService = jwtService;
-        _sendGridSettings = sendGridSettings.Value;
+       
     }
 
     public async Task<PaginationResponse<UserResponse>> GetPaginatedUsers(PaginationRequest pagination)
@@ -141,7 +138,8 @@ public class UserService : IUserService
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
         var template = await _context.EmailTemplate.FirstOrDefaultAsync(e => e.Category == "Onboarding");
-        Helpers.SendMail(_sendGridSettings, template, user.Email);
+        var isEmailSent = await _emailService.SendEmailAsync(template, user.Email);
+        Console.WriteLine(isEmailSent);
         user.Role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == user.RoleId);
         var token = _jwtService.GenerateToken(user.Id, request.Email, user.Role.Name);
 

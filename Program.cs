@@ -5,13 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using car_repair.Models.DTO;
+using SendGrid;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuración de secciones tipadas
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid"));
-builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("Jwt"));
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings["SecretKey"];
+var issuer = jwtSettings["Issuer"];
+var audience = jwtSettings["Audience"];
 
 // Obtener configuración JWT tipada
 var tokenSettings = builder.Configuration.GetSection("Jwt").Get<TokenSettings>();
@@ -30,7 +35,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureInMemoryDatabase();
 
+builder.Services.AddSingleton<ISendGridClient>(provider =>
+{
+    var settings = provider.GetService<IOptions<SendGridSettings>>().Value;
+    return new SendGridClient(settings.ApiKey);
+});
 
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 builder.Services.AddScoped<IExceptionHandlingService, ExceptionHandlingService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
@@ -60,9 +72,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = tokenSettings.Issuer,
-        ValidAudience = tokenSettings.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSettings.Key)),
+        ValidIssuer = issuer,
+        ValidAudience = audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
         ClockSkew = TimeSpan.Zero
     };
     options.Events = new JwtBearerEvents

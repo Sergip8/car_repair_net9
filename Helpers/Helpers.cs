@@ -65,13 +65,6 @@ static class Helpers
 
         }
     }
-    public static async void SendMail(SendGridSettings sendGridSettings, EmailTemplate emailTemplate, string destination)
-    {
-        var apiKey = sendGridSettings.ApiKey;
-        var client = new SendGridClient(apiKey);
-        var from = new EmailAddress(sendGridSettings.Email, sendGridSettings.Name);
-        var to = new EmailAddress(destination);
-        var msg = MailHelper.CreateSingleEmail(from, to, emailTemplate.Subject, emailTemplate.PlainTextContent, emailTemplate.PlainTextContent);
-        await client.SendEmailAsync(msg);
-    }
+
+
 }

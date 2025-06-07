@@ -397,11 +397,11 @@ modelBuilder.Entity<User>()
         {
             Id = 1,
             Name = "Bienvenida Usuario",
-            Subject = "¡Bienvenido a nuestra plataforma, {{UserName}}!",
+            Subject = "¡Bienvenido a nuestra plataforma, {{Username}}!",
             Category = "Onboarding",
             HtmlContent = @"
                     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-                        <h1 style='color: #2c3e50;'>¡Hola {{UserName}}!</h1>
+                        <h1 style='color: #2c3e50;'>¡Hola {{Username}}!</h1>
                         <p>Nos complace darte la bienvenida a nuestra plataforma.</p>
                         <p>Aquí tienes algunos recursos para comenzar:</p>
                         <ul>
@@ -412,7 +412,7 @@ modelBuilder.Entity<User>()
                         <p>¡Esperamos que tengas una excelente experiencia!</p>
                         <p>Saludos,<br>El equipo de {{CompanyName}}</p>
                     </div>",
-            PlainTextContent = @"¡Hola {{UserName}}!
+            PlainTextContent = @"¡Hola {{Username}}!
                 
                 Nos complace darte la bienvenida a nuestra plataforma.
                 
@@ -483,7 +483,7 @@ modelBuilder.Entity<User>()
                 HtmlContent = @"
                     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
                         <h1 style='color: #e74c3c;'>Restablece tu contraseña</h1>
-                        <p>Hola {{UserName}},</p>
+                        <p>Hola {{Username}},</p>
                         <p>Recibimos una solicitud para restablecer la contraseña de tu cuenta.</p>
                         
                         <div style='text-align: center; margin: 30px 0;'>
@@ -497,7 +497,7 @@ modelBuilder.Entity<User>()
                     </div>",
                 PlainTextContent = @"Restablece tu contraseña
                 
-                Hola {{UserName}},
+                Hola {{Username}},
                 
                 Recibimos una solicitud para restablecer la contraseña de tu cuenta.
                 
