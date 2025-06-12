@@ -18,4 +18,15 @@ namespace car_repair.Models.DTO
         bool IsActive,
         int ServiceCategoryId
     );
+
+    public record ServiceWithCategoryResponse(
+        int Id,
+        string Name,
+        string? Description,
+        decimal BasePrice,
+        int EstimatedDurationMinutes,
+        bool IsActive,
+        int ServiceCategoryId,
+        ServiceCategoryResponse ServiceCategory
+    );
 }

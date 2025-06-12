@@ -101,19 +101,24 @@ public class AppMappingProfile : Profile
         CreateMap<WorkOrderServiceEnt, WorkOrderServiceResponse>();
 
         // User
-CreateMap<CreateUserRequest, User>()
-    .ForMember(dest => dest.Id, opt => opt.Ignore())
-    .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
-    .ForMember(dest => dest.Role, opt => opt.Ignore())
-    .ForMember(dest => dest.Customer, opt => opt.Ignore())
-    .ForMember(dest => dest.Employee, opt => opt.Ignore());
-CreateMap<RegisterRequest, User>()
-    .ForMember(dest => dest.Id, opt => opt.Ignore())
-    .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
-    .ForMember(dest => dest.Role, opt => opt.Ignore())
-    .ForMember(dest => dest.Customer, opt => opt.Ignore())
-    .ForMember(dest => dest.Employee, opt => opt.Ignore());
-CreateMap<User, UserResponse>()
-    .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role != null ? src.Role.Name : string.Empty));
+        CreateMap<CreateUserRequest, User>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            .ForMember(dest => dest.Role, opt => opt.Ignore())
+            .ForMember(dest => dest.Customer, opt => opt.Ignore())
+            .ForMember(dest => dest.Employee, opt => opt.Ignore());
+        CreateMap<RegisterRequest, User>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            .ForMember(dest => dest.Role, opt => opt.Ignore())
+            .ForMember(dest => dest.Customer, opt => opt.Ignore())
+            .ForMember(dest => dest.Employee, opt => opt.Ignore());
+        CreateMap<User, UserResponse>()
+            .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role != null ? src.Role.Name : string.Empty));
+
+        CreateMap<Service, ServiceWithCategoryResponse>()
+            .ForMember(dest => dest.ServiceCategory, opt => opt.MapFrom(src => src.ServiceCategory));
+
+        CreateMap<Brand, BrandResponse>();
     }
 }

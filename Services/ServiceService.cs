@@ -93,4 +93,16 @@ class ServiceService : IServiceService
             return _mapper.Map<ServiceResponse>(service);
         }, nameof(DeleteService));
     }
+
+    public async Task<List<ServiceWithCategoryResponse>> GetServiceHome()
+    {
+        return await _exceptionHandling.ExecuteAsync(async () =>
+        {
+            var services = await _context.Services
+                .Include(s => s.ServiceCategory)
+                .Where(s => s.IsActive)
+                .ToListAsync();
+            return services.Select(s => _mapper.Map<ServiceWithCategoryResponse>(s)).ToList();
+        }, nameof(GetServiceHome));
+    }
 }

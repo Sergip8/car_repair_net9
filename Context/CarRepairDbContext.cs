@@ -22,6 +22,7 @@ public class CarRepairDbContext : DbContext
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<EmailTemplate> EmailTemplate { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -626,6 +627,18 @@ modelBuilder.Entity<User>()
             }
         );
     
-
+        // Seed Brands
+        modelBuilder.Entity<Brand>().HasData(
+            new Brand { Id = 1, Title = "Toyota", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e7/Toyota.svg" },
+            new Brand { Id = 2, Title = "Ford", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg" },
+            new Brand { Id = 3, Title = "BMW", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" },
+            new Brand { Id = 4, Title = "Mercedes-Benz", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/9/9e/Mercedes-Benz_Logo_2010.svg" },
+            new Brand { Id = 5, Title = "Audi", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/9/92/Audi-Logo_2016.svg" },
+            new Brand { Id = 6, Title = "Volkswagen", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/6d/Volkswagen_logo_2019.svg" },
+            new Brand { Id = 7, Title = "Honda", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg" },
+            new Brand { Id = 8, Title = "Nissan", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/2/23/Nissan_2020_logo.svg" },
+            new Brand { Id = 9, Title = "Chevrolet", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Logo_Chevrolet.svg" },
+            new Brand { Id = 10, Title = "Hyundai", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/44/Hyundai_Motor_Company_logo.svg" }
+        );
     }
     }

@@ -7,4 +7,5 @@ public interface IServiceService
     Task<ServiceResponse> UpdateService(int id, CreateServiceRequest request);
     Task<ServiceResponse> GetServiceById(int id);
     Task<ServiceResponse> DeleteService(int id);
+    Task<List<ServiceWithCategoryResponse>> GetServiceHome();
 }

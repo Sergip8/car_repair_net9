@@ -1,0 +1,5 @@
+services:
+  api:
+   image: "sergip8/net-car-repair"
+   ports:
+    - "5000:8080"
